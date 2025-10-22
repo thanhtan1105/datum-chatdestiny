@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-agentcore": "^3.911.0",
     "axios": "^1.6.0",
+    "crypto-js": "^4.2.0",
     "dotenv": "^17.2.3",
     "framer-motion": "^10.16.0",
     "lucide-react": "^0.294.0",
@@ -20,7 +21,7 @@
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "three": "^0.160.0"
+    "three": "^0.164.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

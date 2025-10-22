@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Sparkles, RotateCcw } from 'lucide-react'
+import { Send, Sparkles } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CharacterAvatar from './CharacterAvatar'
@@ -17,7 +17,7 @@ const WaifuChatInterface = () => {
       return v.toString(16)
     })
   }
-  
+
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -43,6 +43,167 @@ const WaifuChatInterface = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // Enhanced typing indicator component
+  const TypingIndicator = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      className="flex justify-start"
+    >
+      <div className="max-w-[85%] md:max-w-[80%] relative group">
+        {/* Magical glow effect */}
+        <motion.div
+          animate={{
+            opacity: [0.3, 0.8, 0.3],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute -inset-2 bg-gradient-to-r from-purple-400/30 via-pink-400/30 to-purple-400/30 rounded-3xl blur-xl"
+        />
+
+        {/* Main bubble */}
+        <motion.div
+          animate={{
+            boxShadow: [
+              "0 10px 30px rgba(168, 85, 247, 0.2)",
+              "0 15px 40px rgba(236, 72, 153, 0.3)",
+              "0 10px 30px rgba(168, 85, 247, 0.2)"
+            ]
+          }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="relative rounded-2xl px-6 py-5 bg-gradient-to-br from-white/95 via-purple-50/90 to-pink-50/90 backdrop-blur-xl border border-purple-200/60 shadow-xl overflow-hidden"
+        >
+          {/* Shimmer effect */}
+          <motion.div
+            animate={{
+              x: ['-100%', '200%'],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatDelay: 1,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+          />
+
+          <div className="flex items-center gap-4 relative z-10">
+            {/* Enhanced animated dots */}
+            <div className="flex items-center gap-1.5">
+              <motion.div
+                animate={{
+                  scale: [1, 1.4, 1],
+                  backgroundColor: [
+                    "rgb(168, 85, 247)",
+                    "rgb(236, 72, 153)",
+                    "rgb(168, 85, 247)"
+                  ]
+                }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  delay: 0,
+                  ease: "easeInOut"
+                }}
+                className="w-3 h-3 rounded-full shadow-lg"
+              />
+              <motion.div
+                animate={{
+                  scale: [1, 1.4, 1],
+                  backgroundColor: [
+                    "rgb(168, 85, 247)",
+                    "rgb(236, 72, 153)",
+                    "rgb(168, 85, 247)"
+                  ]
+                }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  delay: 0.2,
+                  ease: "easeInOut"
+                }}
+                className="w-3 h-3 rounded-full shadow-lg"
+              />
+              <motion.div
+                animate={{
+                  scale: [1, 1.4, 1],
+                  backgroundColor: [
+                    "rgb(168, 85, 247)",
+                    "rgb(236, 72, 153)",
+                    "rgb(168, 85, 247)"
+                  ]
+                }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  delay: 0.4,
+                  ease: "easeInOut"
+                }}
+                className="w-3 h-3 rounded-full shadow-lg"
+              />
+            </div>
+
+            {/* Enhanced text with gradient */}
+            <motion.div
+              animate={{ opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="flex items-center gap-2"
+            >
+              <span className="text-sm font-medium bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">
+                Consulting the mystical energies
+              </span>
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="text-purple-500"
+              >
+                ✨
+              </motion.span>
+            </motion.div>
+          </div>
+
+          {/* Floating particles */}
+          <motion.div
+            animate={{
+              y: [-10, -20, -10],
+              opacity: [0.3, 0.7, 0.3]
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-2 right-4 text-purple-400/50 text-xs"
+          >
+            ✦
+          </motion.div>
+          <motion.div
+            animate={{
+              y: [-5, -15, -5],
+              opacity: [0.4, 0.8, 0.4]
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-2 right-6 text-pink-400/50 text-xs"
+          >
+            ✧
+          </motion.div>
+        </motion.div>
+
+        {/* Enhanced timestamp */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-xs text-purple-400/70 mt-2 px-2 font-medium"
+        >
+          {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+
   useEffect(() => {
     scrollToBottom()
   }, [messages])
@@ -51,7 +212,7 @@ const WaifuChatInterface = () => {
     // Update both actorId and sessionId to match loaded session
     setActorId(newActorId)
     setSessionId(newSessionId)
-    
+
     const formattedMessages = loadedMessages.map((msg, index) => ({
       id: Date.now() + index,
       text: msg.text,
@@ -59,7 +220,7 @@ const WaifuChatInterface = () => {
       agent: msg.sender === 'bot' ? (msg.agent || 'welcome') : undefined,
       timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date()
     }))
-    
+
     setMessages(formattedMessages.length > 0 ? formattedMessages : [
       {
         id: 1,
@@ -80,20 +241,27 @@ const WaifuChatInterface = () => {
   const handleSendMessage = async () => {
     if (!input.trim() || isTyping) return
 
+    const numerology_user = JSON.parse(localStorage.getItem("numerology_user"))
+    const final_text = JSON.stringify({
+      "user_name": numerology_user.name,
+      "user_birthday": numerology_user.birthday,
+      "user_message": input.trim()
+    })
+
     const userMessage = {
       id: Date.now(),
       text: input.trim(),
       sender: 'user',
       timestamp: new Date()
     }
-    
+
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsTyping(true)
 
     try {
-      const response = await sendMessage(input.trim(), actorId, sessionId)
-      
+      const response = await sendMessage(final_text, actorId, sessionId)
+
       // Prepare the response (clean thinking tags)
       const botMessage = {
         id: Date.now() + 1,
@@ -103,12 +271,12 @@ const WaifuChatInterface = () => {
         timestamp: new Date(),
         cardList: response.card_list || []
       }
-      
+
       // Check if this is a tarot reading with cards
       if (response.agent === 'tarot' && response.card_list && response.card_list.length > 0) {
         // Stop thinking
         setIsTyping(false)
-        
+
         // Show tarot card reveal
         setTarotCards(response.card_list)
         setPendingTarotResponse(botMessage)
@@ -118,7 +286,7 @@ const WaifuChatInterface = () => {
         setIsTyping(false)
         setLatestResponse(botMessage)
         setHeadFlying(true)
-        
+
         // After head flies to chatbox (1.5s animation), add message and reset
         setTimeout(() => {
           setMessages(prev => [...prev, botMessage])
@@ -126,7 +294,7 @@ const WaifuChatInterface = () => {
           setLatestResponse(null)
         }, 1500)
       }
-      
+
     } catch (error) {
       console.error('Error:', error)
       const errorMessage = {
@@ -151,11 +319,11 @@ const WaifuChatInterface = () => {
   const handleTarotRevealComplete = () => {
     // Hide tarot reveal
     setShowTarotReveal(false)
-    
+
     // Show head flying animation with the response
     setLatestResponse(pendingTarotResponse)
     setHeadFlying(true)
-    
+
     // After head flies to chatbox, add message and reset
     setTimeout(() => {
       setMessages(prev => [...prev, pendingTarotResponse])
@@ -183,7 +351,7 @@ const WaifuChatInterface = () => {
       <CharacterAvatar isTyping={isTyping} headFlying={headFlying} latestResponse={latestResponse} isUserTyping={isUserTyping} />
 
       {/* Session Manager */}
-      <SessionManager 
+      <SessionManager
         onLoadSession={handleLoadSession}
         currentActorId={actorId}
         currentSessionId={sessionId}
@@ -233,8 +401,8 @@ const WaifuChatInterface = () => {
                             ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
                             ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
                             li: ({node, ...props}) => <li className="ml-2" {...props} />,
-                            code: ({node, inline, ...props}) => 
-                              inline 
+                            code: ({node, inline, ...props}) =>
+                              inline
                                 ? <code className={`px-1.5 py-0.5 rounded ${message.sender === 'user' ? 'bg-white/20' : 'bg-purple-100'} font-mono text-sm`} {...props} />
                                 : <code className={`block p-3 rounded-lg ${message.sender === 'user' ? 'bg-white/20' : 'bg-purple-100'} font-mono text-sm overflow-x-auto my-2`} {...props} />,
                             h1: ({node, ...props}) => <h1 className="text-xl font-bold mb-2" {...props} />,
@@ -253,12 +421,12 @@ const WaifuChatInterface = () => {
                         <div className="mt-2 inline-flex items-center gap-1 px-2 py-1 bg-purple-100 rounded-full">
                           <Sparkles className="w-3 h-3 text-purple-600" />
                           <span className="text-xs text-purple-700 font-medium">
-                            {message.agent === 'numerology' ? 'Numerology' : 
+                            {message.agent === 'numerology' ? 'Numerology' :
                              message.agent === 'tarot' ? 'Tarot Reading' : 'Guide'}
                           </span>
                         </div>
                       )}
-                      
+
                       {/* Tarot cards indicator */}
                       {message.cardList && message.cardList.length > 0 && (
                         <div className="mt-2 flex flex-wrap gap-1">
@@ -278,6 +446,11 @@ const WaifuChatInterface = () => {
                   </motion.div>
                 </motion.div>
               ))}
+
+              {/* Typing indicator */}
+              {isTyping && (
+                <TypingIndicator key="typing-indicator" />
+              )}
             </AnimatePresence>
 
             <div ref={messagesEndRef} />
@@ -295,11 +468,44 @@ const WaifuChatInterface = () => {
               whileHover={{ scale: 1.01 }}
               className="relative"
             >
-              {/* Glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 rounded-full blur-xl opacity-75" />
-              
+              {/* Enhanced glow effect */}
+              <motion.div
+                animate={isTyping ? {
+                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.02, 1]
+                } : {
+                  opacity: [0.75, 0.9, 0.75]
+                }}
+                transition={{
+                  duration: isTyping ? 1.5 : 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute -inset-2 bg-gradient-to-r from-purple-500 via-pink-500 via-purple-500 to-pink-500 rounded-full blur-2xl"
+              />
+
               {/* Input container */}
-              <div className="relative bg-gradient-to-r from-purple-900/90 to-pink-900/90 backdrop-blur-2xl rounded-full p-2 border-2 border-white/20 shadow-2xl">
+              <motion.div
+                animate={isTyping ? {
+                  borderColor: [
+                    'rgba(255,255,255,0.3)',
+                    'rgba(168,85,247,0.6)',
+                    'rgba(236,72,153,0.6)',
+                    'rgba(255,255,255,0.3)'
+                  ],
+                  boxShadow: [
+                    '0 10px 40px rgba(168,85,247,0.2)',
+                    '0 15px 50px rgba(236,72,153,0.4)',
+                    '0 10px 40px rgba(168,85,247,0.2)'
+                  ]
+                } : {}}
+                transition={isTyping ? {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                } : {}}
+                className="relative bg-gradient-to-r from-purple-900/95 via-purple-800/95 to-pink-900/95 backdrop-blur-2xl rounded-full p-2 border-2 border-white/30 shadow-2xl"
+              >
                 <div className="flex items-center gap-3">
                   <input
                     type="text"
@@ -312,14 +518,77 @@ const WaifuChatInterface = () => {
                     onFocus={() => setIsUserTyping(input.length > 0)}
                     onBlur={() => setIsUserTyping(false)}
                     disabled={isTyping}
-                    placeholder="Share your thoughts with me... ✨"
-                    className="flex-1 px-4 py-3 bg-transparent text-white placeholder-purple-200/50 focus:outline-none text-base"
+                    placeholder={isTyping ? "Awaiting mystical response... ✨" : "Share your thoughts with me... ✨"}
+                    className={`flex-1 px-4 py-3 bg-transparent text-white placeholder-purple-200/50 focus:outline-none text-base transition-all duration-300 ${
+                      isTyping ? 'opacity-60 cursor-not-allowed' : ''
+                    }`}
                   />
-                  
+
+                  {/* Floating particles when typing */}
+                  <AnimatePresence>
+                    {isTyping && (
+                      <>
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, x: 0 }}
+                          animate={{
+                            opacity: [0, 1, 0],
+                            y: [-20, -40, -60],
+                            x: [0, 10, -5]
+                          }}
+                          exit={{ opacity: 0 }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeOut"
+                          }}
+                          className="absolute -top-8 left-1/4 text-purple-300/60 text-xs pointer-events-none"
+                        >
+                          ✦
+                        </motion.div>
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, x: 0 }}
+                          animate={{
+                            opacity: [0, 1, 0],
+                            y: [-15, -35, -55],
+                            x: [0, -8, 12]
+                          }}
+                          exit={{ opacity: 0 }}
+                          transition={{
+                            duration: 2.5,
+                            repeat: Infinity,
+                            ease: "easeOut",
+                            delay: 1
+                          }}
+                          className="absolute -top-6 right-1/3 text-pink-300/60 text-xs pointer-events-none"
+                        >
+                          ✧
+                        </motion.div>
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, x: 0 }}
+                          animate={{
+                            opacity: [0, 1, 0],
+                            y: [-25, -45, -65],
+                            x: [0, 15, -10]
+                          }}
+                          exit={{ opacity: 0 }}
+                          transition={{
+                            duration: 3.5,
+                            repeat: Infinity,
+                            ease: "easeOut",
+                            delay: 0.5
+                          }}
+                          className="absolute -top-10 right-1/4 text-purple-300/60 text-xs pointer-events-none"
+                        >
+                          ✨
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
+
                   <motion.button
                     onClick={handleSendMessage}
                     disabled={isTyping || !input.trim()}
-                    whileHover={{ scale: 1.1, rotate: 15 }}
+                    whileHover={{ scale: isTyping ? 1 : 1.1, rotate: isTyping ? 0 : 15 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-xl disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
                   >
@@ -335,10 +604,59 @@ const WaifuChatInterface = () => {
                       }}
                       className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
                     />
-                    <Send className="w-5 h-5 text-white relative z-10" />
+
+                    {/* Enhanced loading spinner or send icon */}
+                    <AnimatePresence mode="wait">
+                      {isTyping ? (
+                        <motion.div
+                          key="loading"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.5 }}
+                          transition={{ duration: 0.3 }}
+                          className="relative z-10"
+                        >
+                          {/* Outer ring */}
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            className="w-6 h-6 border-2 border-white/20 border-t-white/80 border-r-white/60 rounded-full"
+                          />
+                          {/* Inner sparkle */}
+                          <motion.div
+                            animate={{
+                              rotate: -360,
+                              scale: [1, 1.2, 1]
+                            }}
+                            transition={{
+                              rotate: { duration: 1.5, repeat: Infinity, ease: "linear" },
+                              scale: { duration: 1, repeat: Infinity, ease: "easeInOut" }
+                            }}
+                            className="absolute inset-0 flex items-center justify-center"
+                          >
+                            <span className="text-white/90 text-xs">✨</span>
+                          </motion.div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="send"
+                          initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                          exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 20
+                          }}
+                          whileHover={{ scale: 1.1, rotate: 15 }}
+                        >
+                          <Send className="w-5 h-5 text-white relative z-10 drop-shadow-lg" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.button>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Session info - Smaller */}

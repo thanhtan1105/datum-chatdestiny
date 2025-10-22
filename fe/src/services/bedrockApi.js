@@ -1,7 +1,7 @@
 import { BedrockAgentCoreClient, InvokeAgentRuntimeCommand } from "@aws-sdk/client-bedrock-agentcore"
 
 // Configuration from environment variables (with VITE_ prefix for Vite)
-const AGENT_RUNTIME_ARN = import.meta.env.VITE_AGENT_RUNTIME_ARN || 'arn:aws:bedrock-agentcore:us-east-1:859552982781:runtime/hosted_agent_yhu4o-VT3rUT2cCc'
+const AGENT_RUNTIME_ARN = import.meta.env.VITE_AGENT_RUNTIME_ARN || 'arn:aws:bedrock-agentcore:us-east-1:161409283793:runtime/chatdestiny-CpdlPd2w1j'
 const AWS_REGION = import.meta.env.VITE_AWS_REGION || 'us-east-1'
 const AWS_ACCESS_KEY_ID = import.meta.env.VITE_AWS_ACCESS_KEY_ID
 const AWS_SECRET_ACCESS_KEY = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
